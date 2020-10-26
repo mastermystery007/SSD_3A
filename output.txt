@@ -1,1 +1,14 @@
 
+
+Date differnce : 366
+
+Date differnce : 366
+
+Date differnce : 365
+
+Available slot 
+Employee1: ['9:00 AM - 9:05 AM','11:05 AM - 12:30 PM','1:00 PM - 4:00 PM',]
+Employee2: ['9:00 AM - 09:03 AM','9:30 AM - 12:00 PM','1:30 PM - 3:30 PM','4:30 PM - 5:00 PM',]
+
+Slot duration: 0.5 hour 
+{'5/10/2020':[11:05AM - 11:35AM']}

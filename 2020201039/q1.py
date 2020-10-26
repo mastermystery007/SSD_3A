@@ -146,7 +146,5 @@ emp1_level = get_Level(root,employee1,0)
 emp2_level = get_Level(root,employee2,0)
 
 
-
-if(len(intrsctn)!=0):
-    print (str(common_boss_val)+" is "+str(emp1_level-boss_level)+" levels above "+employee1)
-    print (str(common_boss_val)+" is "+str(emp2_level-boss_level)+" levels above "+employee2)
+print (str(common_boss_val)+" is "+str(emp1_level-boss_level)+" levels above "+employee1)
+print (str(common_boss_val)+" is "+str(emp2_level-boss_level)+" levels above "+employee2)

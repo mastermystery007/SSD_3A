@@ -69,12 +69,15 @@ def fill_time_2(t1,t2):
 def rev_sanitize(mins):
     h = mins/60
     rm = mins%60
-    if (rm == 0):
-        rm="00"
+    if (rm <= 9):
+        rm="0"+str(rm)
     
     
     if(h>=3):
-        tt = Time(int(9+h),rm,"PM")
+        if(h>=4):
+            tt = Time(int(9+h-12),rm,"PM")
+        else:
+            tt = Time(int(9+h),rm,"PM")
     else:
         tt = Time(int(9+h),rm,"AM")    
     
@@ -118,8 +121,15 @@ line2 = f2.readline()
 obj1 = eval ("(" + line1 + ")");
 obj2 = eval ("(" + line2 + ")");
 
-a = (obj1['Employee1'].keys())
-b = (obj2['Employee2'].keys())
+keys_employee=[]
+for key in obj1.keys():
+    keys_employee.append(key)
+for key in obj2.keys():
+    keys_employee.append(key)
+#print("The keys are"+str(keys_employee[1]))
+
+a = (obj1[keys_employee[0]].keys())
+b = (obj2[keys_employee[1]].keys())
 
 for key1 in a :
     date1 = key1
@@ -129,8 +139,8 @@ if(date1 !=date2):
     print("Dates are different ")
            
 else:
-    access1 = obj1['Employee1'][date1]
-    access2 = obj2['Employee2'][date2] 
+    access1 = obj1[keys_employee[0]][date1]
+    access2 = obj2[keys_employee[1]][date2] 
 
     time1=[]
     buckets1 = [0] * 480  # 480 mins  = 8 hrs 
@@ -196,7 +206,7 @@ else:
     print (strh)   
     file1write = open("output.txt","a")
 
-    file1write.write("Available slot \n")
+    file1write.write("\nAvailable slot \n")
     file1write.write("Employee1: [")
     file1write.write(str1)
     file1write.write("]")
@@ -213,16 +223,3 @@ else:
     #file1write.write(strh)
     file1write.close() 
 
-#"""
-#t1 = Time(9,30,"AM") 
-#t2 = Time(10,30,"AM") 
-#t1f = sanitize_time(t1)
-#t2f = sanitize_time(t2)
-
-#if(t1f>t2f):
-#    arr = fill_time(t2f,t1f)
-#else:
-#    arr= fill_time(t1f,t2f)
-
-
-#print(arr)
