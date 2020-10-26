@@ -109,9 +109,9 @@ def get_common(duration,a1,a2):
     
 
 
-f1 = open("e1.txt", "r")
+f1 = open("Employee1.txt", "r")
 line1 = f1.readline()
-f2 = open("e2.txt", "r")
+f2 = open("Employee2.txt", "r")
 line2 = f2.readline()
 
 
@@ -124,91 +124,94 @@ b = (obj2['Employee2'].keys())
 for key1 in a :
     date1 = key1
 for key2 in b :
-    date2 = key2    
+    date2 = key2 
+if(date1 !=date2):
+    print("Dates are different ")
+           
+else:
+    access1 = obj1['Employee1'][date1]
+    access2 = obj2['Employee2'][date2] 
 
-access1 = obj1['Employee1'][date1]
-access2 = obj2['Employee2'][date2] 
-
-time1=[]
-buckets1 = [0] * 480  # 480 mins  = 8 hrs 
-time2=[]
-buckets2 = [0] * 480
-for item in access1:
-    item = item.replace(" ", "")
-    x = re.search("^(1[0-2]|0?[1-9]):([0-5][0-9]) ?([AaPp][Mm])(-)(1[0-2]|0?[1-9]):([0-5][0-9]) ?([AaPp][Mm])$", item)
-    
-    t1 = Time(x.group(1),x.group(2),x.group(3))
-    if(t1.hrs=="12"):
-        t1.phase="AM"
+    time1=[]
+    buckets1 = [0] * 480  # 480 mins  = 8 hrs 
+    time2=[]
+    buckets2 = [0] * 480
+    for item in access1:
+        item = item.replace(" ", "")
+        x = re.search("^(1[0-2]|0?[1-9]):([0-5][0-9]) ?([AaPp][Mm])(-)(1[0-2]|0?[1-9]):([0-5][0-9]) ?([AaPp][Mm])$", item)
         
-    t2 = Time(x.group(5),x.group(6),x.group(7))
-    if(t2.hrs=="12"):
-        t2.phase="AM"
-    
-    time1.append([t1,t2])
-    
-    fill_time_1(t1,t2)
-
-
-for item in access2:
-    item = item.replace(" ", "")
-    x = re.search("^(1[0-2]|0?[1-9]):([0-5][0-9]) ?([AaPp][Mm])(-)(1[0-2]|0?[1-9]):([0-5][0-9]) ?([AaPp][Mm])$", item)
-    
-    t1 = Time(x.group(1),x.group(2),x.group(3))
-    if(t1.hrs=="12"):
-        t1.phase="AM"
+        t1 = Time(x.group(1),x.group(2),x.group(3))
+        if(t1.hrs=="12"):
+            t1.phase="AM"
+            
+        t2 = Time(x.group(5),x.group(6),x.group(7))
+        if(t2.hrs=="12"):
+            t2.phase="AM"
         
-    t2 = Time(x.group(5),x.group(6),x.group(7))
-    if(t2.hrs=="12"):
-        t2.phase="AM"
-    
-    time2.append([t1,t2])
-    
-    fill_time_2(t1,t2)    
+        time1.append([t1,t2])
+        
+        fill_time_1(t1,t2)
 
-cnt2=0
-cnt1=0
-for i in range (0,480):
-    if(buckets2[i]==1):
-        cnt2=cnt2+1
-    if(buckets1[i]==1):
-        cnt1=cnt1+1
 
-empty1 = fill_empty(time1)
+    for item in access2:
+        item = item.replace(" ", "")
+        x = re.search("^(1[0-2]|0?[1-9]):([0-5][0-9]) ?([AaPp][Mm])(-)(1[0-2]|0?[1-9]):([0-5][0-9]) ?([AaPp][Mm])$", item)
+        
+        t1 = Time(x.group(1),x.group(2),x.group(3))
+        if(t1.hrs=="12"):
+            t1.phase="AM"
+            
+        t2 = Time(x.group(5),x.group(6),x.group(7))
+        if(t2.hrs=="12"):
+            t2.phase="AM"
+        
+        time2.append([t1,t2])
+        
+        fill_time_2(t1,t2)    
 
-empty2 = fill_empty(time2)
-str1 = ""
-str2 = ""
-for i in range (0,len(empty1)):
-    str1+="'"+empty1[i][0].hrs+":"+empty1[i][0].mins+" "+empty1[i][0].phase+" - "+empty1[i][1].hrs+":"+empty1[i][1].mins+" "+empty1[i][1].phase+"'"+","
+    cnt2=0
+    cnt1=0
+    for i in range (0,480):
+        if(buckets2[i]==1):
+            cnt2=cnt2+1
+        if(buckets1[i]==1):
+            cnt1=cnt1+1
 
-for i in range (0,len(empty2)):
-    str2+="'"+empty2[i][0].hrs+":"+empty2[i][0].mins+" "+empty2[i][0].phase+" - "+empty2[i][1].hrs+":"+empty2[i][1].mins+" "+empty2[i][1].phase+"'"+","
-     
+    empty1 = fill_empty(time1)
 
-print (str1)
-print (str2)    
-time = input("Enter slot duration in hours : ")
-strh = get_common(int(float(time)*60),buckets1,buckets2)
-print (strh)   
-file1write = open("MyFile.txt","a")
+    empty2 = fill_empty(time2)
+    str1 = ""
+    str2 = ""
+    for i in range (0,len(empty1)):
+        str1+="'"+empty1[i][0].hrs+":"+empty1[i][0].mins+" "+empty1[i][0].phase+" - "+empty1[i][1].hrs+":"+empty1[i][1].mins+" "+empty1[i][1].phase+"'"+","
 
-file1write.write("Available slot \n")
-file1write.write("Employee1: [")
-file1write.write(str1)
-file1write.write("]")
-file1write.write("\n") 
-file1write.write("Employee2: [")
-file1write.write(str2)
-file1write.write("]")
-file1write.write("\n") 
+    for i in range (0,len(empty2)):
+        str2+="'"+empty2[i][0].hrs+":"+empty2[i][0].mins+" "+empty2[i][0].phase+" - "+empty2[i][1].hrs+":"+empty2[i][1].mins+" "+empty2[i][1].phase+"'"+","
+        
 
-file1write.write("\n") 
-file1write.write("Slot duration "+time+" hour")
-file1write.write("{'"+date1+"':["+strh+"']}")
+    #print (str1)
+    #print (str2)    
+    time = input("Enter slot duration in hours : ")
+    strh = get_common(int(float(time)*60),buckets1,buckets2)
+    print (strh)   
+    file1write = open("output.txt","a")
 
-#file1write.write(strh)
-file1write.close() 
+    file1write.write("Available slot \n")
+    file1write.write("Employee1: [")
+    file1write.write(str1)
+    file1write.write("]")
+    file1write.write("\n") 
+    file1write.write("Employee2: [")
+    file1write.write(str2)
+    file1write.write("]")
+    file1write.write("\n") 
+
+    file1write.write("\n") 
+    file1write.write("Slot duration: "+time+" hour \n")
+    file1write.write("{'"+date1+"':["+strh+"']}")
+
+    #file1write.write(strh)
+    file1write.close() 
 
 #"""
 #t1 = Time(9,30,"AM") 

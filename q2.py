@@ -52,8 +52,12 @@ def total_Diff(date1,date2):
     
    # print("days 1 is"+str(days_1))
     #print("days 2 is"+str(days_2))
-
-    print ("The differnce is "+str(int(days_1)-int(days_2)))
+    stringent=""
+    pass_me = int(days_1)-int(days_2)
+    if(pass_me<0):
+        pass_me=pass_me*(-1)
+    stringent=stringent+"Date differnce : "+str(pass_me)
+    return stringent
 
 def check_Leap_Year(year):
     if ((int(year) % 4 == 0 ) and ((int(year) % 100) != 0 or (int(year) % 400) == 0)):
@@ -64,7 +68,7 @@ def check_Leap_Year(year):
 
 
 lines=[]
-f1 = open("date_input.txt", "r")
+f1 = open("date_calculator.txt", "r")
 for line in f1.readlines():
     lines.append(line)
 #date1 = input("Enter First Date : ")
@@ -134,4 +138,7 @@ year2 =(y.group(5))
 dt2 = Date(day2,month2,year2) 
 
 
-total_Diff(dt1,dt2)
+stringle = total_Diff(dt1,dt2)
+
+file1write = open("output.txt","a")
+file1write.write("\n"+stringle+"\n")

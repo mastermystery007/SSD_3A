@@ -99,7 +99,7 @@ def get_node(id,root):
     return None    
 
 
-input_file=open('boss.json', 'r')
+input_file=open('org.json', 'r')
 
 json_decode=json.load(input_file)
 levels=[]
