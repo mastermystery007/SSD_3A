@@ -1,4 +1,5 @@
 import re
+import sys
 
 
 class Date:
@@ -68,6 +69,10 @@ def check_Leap_Year(year):
 
 
 lines=[]
+n = len(sys.argv)
+
+
+
 f1 = open("date_calculator.txt", "r")
 for line in f1.readlines():
     lines.append(line)
@@ -104,6 +109,13 @@ if(month1=="December" or month1=="Dec"):
     month1="12" 
       
 year1 = (x.group(5))
+if(n>1):
+    dom1 = str(sys.argv[1])[:1]
+    if(dom1=="m"):
+        dummy = month1
+        month1 = day1
+        day1 = dummy
+
 dt1 = Date(day1, month1, year1)
 
 day2 = (y.group(1))
@@ -134,6 +146,12 @@ if(month2=="November" or month2=="Nov"):
 if(month2=="December" or month2=="Dec"):     
     month2="12"
 
+if(n>1):
+    dom2 = str(sys.argv[1])[:1]
+    if(dom2=="m"):
+        dummy = month1
+        month1 = day1
+        day1 = dummy
 year2 =(y.group(5))
 dt2 = Date(day2,month2,year2) 
 
