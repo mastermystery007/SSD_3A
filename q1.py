@@ -165,38 +165,3 @@ else:
         allemployeelevels.append(emplevel)    
     for i in range (0,len(allemployeelevels)):
         print(str(finalleader)+" is "+str(allemployeelevels[i]-boss_level)+" levels above "+allemployees[i])
-
-
-
-"""
-for leader in firstlist:
-        for interleader in finallist:
-            if(interleaders == leader):
-
-
-
- return set(lst1).intersection(lst2)
-common_boss_val = 0
-flag=1
-for i in range (0,len(leaders1)):
-    for j in range (0,len(leaders2)):
-        if(leaders2[j]==leaders1[i] and flag==1):
-            common_boss_val=leaders1[i]
-            flag=0
-            print("The common boss is "+common_boss_val)   
-if(flag==1):
-    print("No common boss")                   
-#print(leaders1)
-#print(leaders2)
-intrsctn=(set(leaders1)).intersection(set(leaders2))
-#print(intrsctn)
-boss_level = get_Level(root,common_boss_val,0)
-emp1_level = get_Level(root,employee1,0)
-emp2_level = get_Level(root,employee2,0)
-
-
-
-if(len(intrsctn)!=0):
-    print (str(common_boss_val)+" is "+str(emp1_level-boss_level)+" levels above "+employee1)
-    print (str(common_boss_val)+" is "+str(emp2_level-boss_level)+" levels above "+employee2)
-"""
