@@ -24,18 +24,9 @@ def sanitize_time(time):
         total_mins = total_mins+(int(time.mins))
     return total_mins
 
-
-def fill_empty(filled_slots):
+def fill_half_empty(filled_slots):
     empty_slots = []
-    a=0
-    if((filled_slots[0][0].hrs == "9" ) and filled_slots[0][0].mins == "00"):
-       pass
-    else:
-        temp = Time("9", "00", "AM")
-        empty_slots.append([temp, filled_slots[0][0]])
-
     for i in range(0, len(filled_slots)-1):
-
         if(not((filled_slots[i][1].hrs == filled_slots[i+1][0].hrs) and (filled_slots[i][1].mins == filled_slots[i+1][0].mins))):
             if(filled_slots[i][1].hrs == "12"):
                 temp1 = Time(filled_slots[i][1].hrs,
@@ -52,13 +43,40 @@ def fill_empty(filled_slots):
                     filled_slots[i+1][0].hrs, filled_slots[i+1][0].mins, filled_slots[i+1][0].phase)
 
             empty_slots.append([temp1, temp2])
+    
+    return empty_slots        
+
+
+def fill_empty(filled_slots):
+    empty_slots = []
+    a=0
+    if((filled_slots[0][0].hrs == "9" or filled_slots[0][0].hrs == "09") and filled_slots[0][0].mins == "00"):
+       pass
+    else:
+        temp = Time("9", "00", "AM")
+        if(filled_slots[0][0].hrs == "12"):
+                temp12 = Time(filled_slots[0][0].hrs, filled_slots[0][0].mins, "PM")
+        else:
+            temp12 = Time(filled_slots[0][0].hrs, filled_slots[0][0].mins,filled_slots[0][0].phase)        
+        empty_slots.append([temp,temp12])
+
+    temp_slots= fill_half_empty(filled_slots)
+
+    for i in range (0,len(temp_slots)):
+        empty_slots.append(temp_slots[i])
+
 
     if((filled_slots[len(filled_slots)-1][1].hrs == "5" or filled_slots[len(filled_slots)-1][1].hrs=="05") and filled_slots[len(filled_slots)-1][1].mins == "00"):
         pass
     else:
         temp = Time("5", "00", "PM")
-        empty_slots.append([filled_slots[len(filled_slots)-1][1], temp])
-
+        length = len(filled_slots)-1
+        
+        if(filled_slots[length][1].hrs == "12"):
+                temp5 = Time(filled_slots[length][1].hrs, filled_slots[length][1].mins, "PM")
+        else:
+            temp5 = Time(filled_slots[length][1].hrs, filled_slots[length][1].mins,filled_slots[length][1].phase)        
+        empty_slots.append([temp5, temp])
     return empty_slots
 
 
@@ -114,7 +132,7 @@ def get_common_array(all_free_slots,nooffiles,duration):
             strp = ""
             strp += str(t.hrs)+":"+str(t.mins)+str(t.phase)+" "+"-" + \
             " "+str(p.hrs)+":"+str(p.mins)+str(p.phase)
-            print (str(t.mins))
+            
             return strp
             
     return "No common slot"
@@ -235,7 +253,3 @@ file1write.write("Slot Duration:  "+str(slot_dur)+" hrs\n")
 file1write.write("{'"+all_emp_dates[0]+"' : ['"+get_common_array(all_free_slots,numberoffiles,float(slot_dur)*60)+"']}")
 
 file1write.close()
-
-
-#time = input("Enter slot duration in hours : ")
-#strh = get_common(int(float(time)*60), buckets1, buckets2)
