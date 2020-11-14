@@ -11,13 +11,7 @@ class Date:
 
 
 
-"""
-def get_Year_Diff(y1,y2):
-    if(y1>y2):
-        return ((int(y1)-int(y2))*365)
-    else:
-        return ((int(y2)-int(y1))*365)    
-"""
+
 
 def get_Total_Days(date):
     year = int(date.y)
